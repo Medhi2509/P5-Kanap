@@ -4,15 +4,12 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
 function showId() {
 
+    const divConf = document.createElement('div');
+    divConf.classList.add('confirmation');
     const confirmationCommande = document.createElement('p');
-    /*confirmationCommande.innerHTML = 'Commande Validée';*/
     const spanOrder = document.createElement('span');
-    spanOrder.id = 'orderId';
+    spanOrder.innerHTML = 'orderId';
 
-
-   /*location.assign('confirmation.html');
-    location = 'confirmation.html';
-
-    window.location.href = 'confirmation.html';*/
+    divConf.appendChild(spanOrder);
 
 };

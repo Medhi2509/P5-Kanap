@@ -107,17 +107,71 @@ function displayItem(item){
     items.appendChild(currentItem);
 }
 
-function isValidForm(){
+function isValidForm() {
 
 
-    const inFirstName = document.getElementById('firstName').value;
-    console.log(inFirstName)
-    const onlyChar = /^[A-Za-z]+$/;
-    console.log(inFirstName.match(onlyChar));
+    const inFirstName = document.getElementById('firstName');
+    const inLastName = document.getElementById('lastName');
+    const inCity = document.getElementById('city');
+    const onlyChar = new RegExp('^[A-Za-z]+$');
 
-    return inFirstName.match(onlyChar) == true;
+    const errFirstName = document.getElementById('firstNameErrorMsg');
+    if (onlyChar.test(inFirstName.value) === true) {
+        errFirstName.innerText = ''
+    } else {
+        errFirstName.innerText = 'Veuillez renseigner un champs valide'
+    }
+    console.log(onlyChar.test(inFirstName.value));
+
+    const errLastName = document.getElementById('lastNameErrorMsg');
+    if (onlyChar.test(inLastName.value) === true) {
+        errLastName.innerText = '';
+    } else {
+        errLastName.innerText = 'Veuillez renseigner un champs valide';
+    }
+    console.log(onlyChar.test(inLastName.value));
+
+    const errCity = document.getElementById('cityErrorMsg');
+    if (onlyChar.test(inCity.value) === true) {
+        errCity.innerText = "";
+    } else {
+        errCity.innerText = 'Veuillez reinseigner un champs valide';
+    }
+    console.log(onlyChar.test(inCity.value));
+
+
+
+    const inAdress = document.getElementById('address');
+    const charAdress = new RegExp('^[#.0-9a-zA-Z\\s,-]+$');
+    const errAdress = document.getElementById('addressErrorMsg');
+    if (charAdress.test(inAdress.value) === true) {
+        errAdress.innerText = '';
+    } else {
+        errAdress.innerText = 'Veuillez renseigner un champs valide';
+    }
+    console.log(charAdress.test(inAdress.value));
+
+    const inMail = document.getElementById('email').value;
+    const charMail = new RegExp('[^\\s@]+@([^\\s@.,]+\\.)+[^\\s@.,]{2,}$');
+
+    const errMail = document.getElementById('emailErrorMsg');
+
+    if (charMail.test(inMail.value) === true) {
+        errMail.innerText = '';
+    } else {
+        errMail.innerText = 'Veuillez renseigner un champs valide';
+    }
+    console.log(charMail.test(inMail.value));
+
+    return onlyChar.test(inFirstName.value) &&
+        onlyChar.test(inLastName.value) &&
+        onlyChar.test(inCity.value) &&
+        charAdress.test(inAdress.value) //&&
+        //charMail.test(inMail.value)
 
 }
+
+
 
 const formSubmit = document.querySelector('.cart__order__form');
 formSubmit.addEventListener("submit", function (event) {
