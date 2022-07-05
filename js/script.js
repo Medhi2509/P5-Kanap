@@ -1,12 +1,11 @@
-window.addEventListener("DOMContentLoaded", (event) => {
 
+//Loading Page
+window.addEventListener("DOMContentLoaded", (event) => {
     const data = fetchData();
 });
 
 
-
-
-
+//Method Get to load product (API)
 function fetchData (){
     const url = 'http://localhost:3000/api/products';
     let option = {
@@ -21,7 +20,7 @@ function fetchData (){
             displayItems(data)
         })
 }
-
+//Id of product and create product sheet
 function displayItems(data){
     const items = document.querySelector('#items');
 

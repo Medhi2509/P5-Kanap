@@ -1,15 +1,17 @@
 window.addEventListener("DOMContentLoaded", (event) => {
-    console.log("DOM entièrement chargé et analysé");
+    showId();
 });
 
+
+//
 function showId() {
 
-    const divConf = document.createElement('div');
-    divConf.classList.add('confirmation');
-    const confirmationCommande = document.createElement('p');
-    const spanOrder = document.createElement('span');
-    spanOrder.innerHTML = 'orderId';
+    //Const divConf = document.createElement('div');
+    //divConf.classList.add('confirmation');
+   //const confirmationCommande = document.createElement('p');
+    //const spanOrder = document.createElement('span');
+    let spanOrder = document.querySelector('#orderId')
+    spanOrder.innerHTML = Math.floor(Math.random() * 1e8);
 
-    divConf.appendChild(spanOrder);
 
 };

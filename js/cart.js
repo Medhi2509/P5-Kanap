@@ -1,11 +1,5 @@
 window.addEventListener("DOMContentLoaded", (event) => {
-    document.querySelectorAll(".deleteItem").forEach(function (item){
-        console.log(item);
-        item.addEventListener("click", (event) => {
-            console.log(event);
-        })
-    })
-    console.log(localStorage.getItem('cart'));
+
 });
 
 let  cart = localStorage.getItem("cart");
@@ -42,6 +36,7 @@ function displayItems(data){
 
     })
 }
+
 
 function displayItem(item){
 
@@ -105,6 +100,23 @@ function displayItem(item){
     currentItem.appendChild(divItemContent);
 
     items.appendChild(currentItem);
+    deleteItem.addEventListener('click', (element) =>{
+        console.log(element);
+
+        //RECUP PARENT
+
+        //const elementId = ...
+        //const elementColor = ...
+        //deleteElement(elementId, elementColor)
+    })
+
+}
+
+function deleteElement(id, color){
+
+    console.log(id);
+    console.log(color);
+
 }
 
 function isValidForm() {
@@ -151,8 +163,8 @@ function isValidForm() {
     }
     console.log(charAdress.test(inAdress.value));
 
-    const inMail = document.getElementById('email').value;
-    const charMail = new RegExp('[^\\s@]+@([^\\s@.,]+\\.)+[^\\s@.,]{2,}$');
+    const inMail = document.getElementById('email');
+    const charMail = new RegExp('^([a-z0-9_\\.-]+\\@[\\da-z\\.-]+\\.[a-z\\.]{2,6})$');
 
     const errMail = document.getElementById('emailErrorMsg');
 
@@ -162,12 +174,13 @@ function isValidForm() {
         errMail.innerText = 'Veuillez renseigner un champs valide';
     }
     console.log(charMail.test(inMail.value));
+    console.log(inMail.value);
 
     return onlyChar.test(inFirstName.value) &&
         onlyChar.test(inLastName.value) &&
         onlyChar.test(inCity.value) &&
-        charAdress.test(inAdress.value) //&&
-        //charMail.test(inMail.value)
+        charAdress.test(inAdress.value) &&
+        charMail.test(inMail.value)
 
 }
 
@@ -178,7 +191,7 @@ formSubmit.addEventListener("submit", function (event) {
     event.preventDefault();
 
     if (isValidForm() === true){
-        window.location.href = 'confirmation.html';
+       window.location.href = 'confirmation.html';
     }
 
 });

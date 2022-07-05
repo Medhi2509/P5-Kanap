@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
     const data = fetchData();
 });
 
-
+//METHOD GET LOAD ID PRODUCT
 function fetchData() {
     const url = `http://localhost:3000/api/products/${currentId}`;
     let option = {
@@ -23,7 +23,7 @@ function fetchData() {
             displayItems(data);
         })
 }
-
+//Create product sheet with price quantity .....
 function displayItems(data) {
     const containerimage = document.querySelector('#item__img');
     const currentImage = document.createElement("img");
@@ -54,6 +54,7 @@ const addButton = document.querySelector("#addToCart");
 const cartLocal = localStorage.getItem('cart');
 const color = document.querySelector('#colors');
 const quantity = document.querySelector('#quantity');
+
 
 addButton.addEventListener('click',()=>{
 
