@@ -101,12 +101,11 @@ function displayItem(item){
 
     items.appendChild(currentItem);
     deleteItem.addEventListener('click', (element) =>{
-        console.log(element);
 
-        //RECUP PARENT
+        const itemDataset = element.target.parentNode.parentNode.parentNode.parentNode.dataset ;
 
-        //const elementId = ...
-        //const elementColor = ...
+        //const elementId =
+        //const elementColor =
         //deleteElement(elementId, elementColor)
     })
 
