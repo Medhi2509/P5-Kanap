@@ -10,7 +10,7 @@ if (cart !== undefined) {
     displayItems(cart)
 }
 
-function fetchData(id) {
+function fetchData(id, cartElement) {
     const url = `http://localhost:3000/api/products/${id}`;
     let option = {
         method: 'GET',
@@ -21,7 +21,7 @@ function fetchData(id) {
             return response.json();
         })
         .then(function (data) {
-            displayItem(data);
+            displayItem(data, cartElement);
         })
 }
 
@@ -32,17 +32,18 @@ const items = document.querySelector('#cart__items');
 function displayItems(data){
 
     data.forEach(function (element){
-        const currentElement =  fetchData(element.id);
+        const currentElement =  fetchData(element.id, element);
 
     })
 }
 
 
-function displayItem(item){
+function displayItem(item, cartElement){
 
     const currentItem = document.createElement("article");
     currentItem.classList.add('cart__item');
     currentItem.setAttribute('data-id', item._id);
+    currentItem.setAttribute('data-color', cartElement.color);
 
     const itemImg = document.createElement("div");
     itemImg.classList.add('cart__item__img');
@@ -62,7 +63,7 @@ function displayItem(item){
     const currentTitle = document.createElement("h2");
     currentTitle.innerHTML = item.name;
     const paragrapheColor = document.createElement("p");
-    paragrapheColor.innerHTML = 'la couleur';
+    paragrapheColor.innerHTML = cartElement.color;
     const paragraphePrice = document.createElement("p");
     paragraphePrice.innerHTML = item.price + '€';
 
@@ -83,7 +84,7 @@ function displayItem(item){
     input.min = '1';
     input.max = '100';
     input.name = 'itemQuantity';
-    input.value = '1';
+    input.value = cartElement.quantity;
     itemContentSettingQuantity.appendChild(quantity);
     itemContentSettingQuantity.appendChild(input);
     itemContentSetting.appendChild(itemContentSettingQuantity);
@@ -104,17 +105,25 @@ function displayItem(item){
 
         const itemDataset = element.target.parentNode.parentNode.parentNode.parentNode.dataset ;
 
-        //const elementId =
-        //const elementColor =
-        //deleteElement(elementId, elementColor)
+        const elementId = itemDataset.id;
+        const elementColor =itemDataset.color;
+        deleteElement(elementId, elementColor)
+
+
     })
 
 }
 
 function deleteElement(id, color){
 
-    console.log(id);
-    console.log(color);
+    let newCartArray = cart.filter(item => {
+        console.log(item)
+        console.log(color)
+        return item.id !== id && item.color !== color;
+    });
+    console.log(newCartArray)
+   // localStorage.setItem('cart',JSON.stringify(newCartArray));
+   //location.reload();
 
 }
 

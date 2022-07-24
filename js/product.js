@@ -62,15 +62,29 @@ addButton.addEventListener('click',()=>{
 
         let cartArray = (cartLocal === null) ? [] : JSON.parse(cartLocal);
 
-        let cardIds = cartArray.map((element) =>  {
-            return element.id
+        const currentCartElement = cartArray.filter(item => {
+            return item.id === currentId && item.color === color.value;
         });
 
-        /*if ()*/
+        let newQuantity = 0;
+
+        if(currentCartElement.length > 0){
+            console.log('oui')
+
+            const currentFind = currentCartElement.find(e => typeof e !== 'undefined');
+            newQuantity = parseInt(currentFind.quantity) + parseInt(quantity.value);
+
+            cartArray = cartArray.filter(item => {
+                return item.id !== currentId && item.color !== color.value;
+            });
+        }else{
+            newQuantity = parseInt(quantity.value);
+        }
+
         const newProduct = {
             id : currentId,
             color : color.value,
-            quantity : quantity.value,
+            quantity : newQuantity
         };
 
         cartArray.push(newProduct);
