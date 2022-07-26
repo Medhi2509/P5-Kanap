@@ -50,6 +50,8 @@ function displayItems(data) {
 }
 
 
+
+//Add element with color and quantity to the
 const addButton = document.querySelector("#addToCart");
 const cartLocal = localStorage.getItem('cart');
 const color = document.querySelector('#colors');

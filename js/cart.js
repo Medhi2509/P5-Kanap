@@ -2,6 +2,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
 });
 
+
+/*Create Local Storage */
 let  cart = localStorage.getItem("cart");
 
 if (cart !== undefined) {
@@ -10,6 +12,7 @@ if (cart !== undefined) {
     displayItems(cart)
 }
 
+/*Function loading product and method get*/
 function fetchData(id, cartElement) {
     const url = `http://localhost:3000/api/products/${id}`;
     let option = {
@@ -37,7 +40,7 @@ function displayItems(data){
     })
 }
 
-
+/* create element Html and set ID and class */
 function displayItem(item, cartElement){
 
     const currentItem = document.createElement("article");
@@ -114,6 +117,7 @@ function displayItem(item, cartElement){
 
 }
 
+/* Delete element stock on LocalStorage*/
 function deleteElement(id, color){
 
     let newCartArray = cart.filter(item => {
@@ -127,6 +131,9 @@ function deleteElement(id, color){
 
 }
 
+
+
+/*Create Form and regex */
 function isValidForm() {
 
 
@@ -193,6 +200,8 @@ function isValidForm() {
 }
 
 
+
+/*Submit form*/
 
 const formSubmit = document.querySelector('.cart__order__form');
 formSubmit.addEventListener("submit", function (event) {
