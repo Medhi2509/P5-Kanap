@@ -8,6 +8,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
     const data = fetchData();
 });
 
+/**
+ *
+ * @returns {Promise<void>}
+ */
+
 //METHOD GET LOAD ID PRODUCT
 function fetchData() {
     const url = `http://localhost:3000/api/products/${currentId}`;
@@ -23,6 +28,11 @@ function fetchData() {
             displayItems(data);
         })
 }
+
+/**
+ *
+ * @param data
+ */
 //Create product sheet with price quantity .....
 function displayItems(data) {
     const containerimage = document.querySelector('#item__img');
@@ -50,7 +60,10 @@ function displayItems(data) {
 }
 
 
-
+/**
+ *
+ *
+ */
 //Add element with color and quantity to the
 const addButton = document.querySelector("#addToCart");
 const cartLocal = localStorage.getItem('cart');

@@ -4,7 +4,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
 
 /*Create Local Storage */
-let  cart = localStorage.getItem("cart");
+let cart = localStorage.getItem("cart");
 
 if (cart !== undefined) {
     cart = JSON.parse(cart);
@@ -31,17 +31,16 @@ function fetchData(id, cartElement) {
 const items = document.querySelector('#cart__items');
 
 
+function displayItems(data) {
 
-function displayItems(data){
-
-    data.forEach(function (element){
-        const currentElement =  fetchData(element.id, element);
+    data.forEach(function (element) {
+        const currentElement = fetchData(element.id, element);
 
     })
 }
 
 /* create element Html and set ID and class */
-function displayItem(item, cartElement){
+function displayItem(item, cartElement) {
 
     const currentItem = document.createElement("article");
     currentItem.classList.add('cart__item');
@@ -55,8 +54,6 @@ function displayItem(item, cartElement){
     img.src = item.imageUrl;
     itemImg.appendChild(img);
     currentItem.appendChild(itemImg);
-
-
 
 
     const divItemContent = document.createElement("div");
@@ -104,12 +101,12 @@ function displayItem(item, cartElement){
     currentItem.appendChild(divItemContent);
 
     items.appendChild(currentItem);
-    deleteItem.addEventListener('click', (element) =>{
+    deleteItem.addEventListener('click', (element) => {
 
-        const itemDataset = element.target.parentNode.parentNode.parentNode.parentNode.dataset ;
+        const itemDataset = element.target.parentNode.parentNode.parentNode.parentNode.dataset;
 
         const elementId = itemDataset.id;
-        const elementColor =itemDataset.color;
+        const elementColor = itemDataset.color;
         deleteElement(elementId, elementColor)
 
 
@@ -118,24 +115,21 @@ function displayItem(item, cartElement){
 }
 
 /* Delete element stock on LocalStorage*/
-function deleteElement(id, color){
+function deleteElement(id, color) {
 
     let newCartArray = cart.filter(item => {
-        console.log(item)
-        console.log(color)
-        return item.id !== id && item.color !== color;
+
+        return !(item.id === id && item.color === color);
     });
     console.log(newCartArray)
-   // localStorage.setItem('cart',JSON.stringify(newCartArray));
-   //location.reload();
+    localStorage.setItem('cart', JSON.stringify(newCartArray));
+    location.reload();
 
 }
 
 
-
 /*Create Form and regex */
 function isValidForm() {
-
 
     const inFirstName = document.getElementById('firstName');
     const inLastName = document.getElementById('lastName');
@@ -165,8 +159,6 @@ function isValidForm() {
         errCity.innerText = 'Veuillez reinseigner un champs valide';
     }
     console.log(onlyChar.test(inCity.value));
-
-
 
     const inAdress = document.getElementById('address');
     const charAdress = new RegExp('^[#.0-9a-zA-Z\\s,-]+$');
@@ -200,15 +192,14 @@ function isValidForm() {
 }
 
 
-
 /*Submit form*/
 
 const formSubmit = document.querySelector('.cart__order__form');
 formSubmit.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    if (isValidForm() === true){
-       window.location.href = 'confirmation.html';
+    if (isValidForm() === true) {
+        window.location.href = 'confirmation.html';
     }
 
 });
