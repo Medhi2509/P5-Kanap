@@ -1,30 +1,38 @@
-
-//Loading Page
+/**
+ * listen dom loading
+ */
 window.addEventListener("DOMContentLoaded", (event) => {
     const data = fetchData();
 });
 
 
-//Method Get to load product (API)
-function fetchData (){
+/**
+ * Method Get to load product (API)
+ * @returns {Promise<void>}
+ */
+function fetchData() {
     const url = 'http://localhost:3000/api/products';
     let option = {
-        method:'GET',
+        method: 'GET',
     }
 
-    return fetch(url,option)
-        .then(function (response){
+    return fetch(url, option)
+        .then(function (response) {
             return response.json();
         })
-        .then(function (data){
+        .then(function (data) {
             displayItems(data)
         })
 }
-//Id of product and create product sheet
-function displayItems(data){
+
+/**
+ * Id of product and create product sheet
+ * @param data
+ */
+function displayItems(data) {
     const items = document.querySelector('#items');
 
-    data.forEach(function (element){
+    data.forEach(function (element) {
         const currentItem = document.createElement("a");
         currentItem.href = `http://localhost:63342/front/html/product.html?id=${element._id}`
 
