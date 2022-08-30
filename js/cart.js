@@ -1,18 +1,17 @@
+let cart;
 window.addEventListener("DOMContentLoaded", (event) => {
+    /**
+     * GET Local Storage
+     */
+    cart = localStorage.getItem("cart");
+    if (cart !== undefined) {
+        cart = JSON.parse(cart); 
+        displayItems(cart);
+    }
 });
 
-let totalPrice = 0
-let totalQuantity = 0
-
-/**
- * GET Local Storage
- */
-let cart = localStorage.getItem("cart");
-
-if (cart !== undefined) {
-    cart = JSON.parse(cart);
-    displayItems(cart)
-}
+let totalPrice = 0;
+let totalQuantity = 0;
 
 /**
  * Fetch and display element
@@ -23,17 +22,14 @@ if (cart !== undefined) {
 function fetchData(id, cartElement) {
     const url = `http://localhost:3000/api/products/${id}`;
     let option = {
-        method: 'GET',
+        method: 'GET'
     }
 
-    return fetch(url, option)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            displayItem(data, cartElement);
-
-        })
+    return fetch(url, option).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        displayItem(data, cartElement);
+    });
 }
 
 const items = document.querySelector('#cart__items');
@@ -44,10 +40,9 @@ const items = document.querySelector('#cart__items');
  */
 
 function displayItems(data) {
-
     data.forEach(function (element) {
         fetchData(element.id, element);
-    })
+    });
 }
 
 /**
@@ -56,7 +51,6 @@ function displayItems(data) {
  * @param cartElement
  */
 function displayItem(item, cartElement) {
-
     const currentItem = document.createElement("article");
     currentItem.classList.add('cart__item');
     currentItem.setAttribute('data-id', item._id);
@@ -74,10 +68,13 @@ function displayItem(item, cartElement) {
     divItemContent.classList.add('cart__item__content');
     const divItemContentDescription = document.createElement("div");
     divItemContentDescription.classList.add('cart__item__content__description');
+
     const currentTitle = document.createElement("h2");
     currentTitle.innerHTML = item.name;
+
     const paragrapheColor = document.createElement("p");
     paragrapheColor.innerHTML = cartElement.color;
+
     const paragraphePrice = document.createElement("p");
     paragraphePrice.innerHTML = item.price + '€';
 
@@ -86,9 +83,9 @@ function displayItem(item, cartElement) {
 
     const htmlTotalQuantity = document.querySelector('#totalQuantity');
     htmlTotalQuantity.innerHTML = String(totalQuantity);
+
     const htmlTotalPrice = document.querySelector('#totalPrice');
     htmlTotalPrice.innerHTML = String(totalPrice);
-
 
     divItemContentDescription.appendChild(currentTitle);
     divItemContentDescription.appendChild(paragrapheColor);
@@ -127,12 +124,15 @@ function displayItem(item, cartElement) {
 
     // Delete button
     deleteItem.addEventListener('click', (element) => {
-
         const itemDataset = element.target.parentNode.parentNode.parentNode.parentNode.dataset;
         const elementId = itemDataset.id;
         const elementColor = itemDataset.color;
         deleteElement(elementId, elementColor)
     })
+
+    input.addEventListener('change', (event) =>{
+        updatePrice(event.target.value, item._id, cartElement.color);
+    });
 }
 
 /**
@@ -208,6 +208,23 @@ function isValidForm() {
 }
 
 /**
+ * Update price
+ * @param newValue
+ * @param productId
+ * @param color
+ */
+function updatePrice (newValue, productId,color) {
+    cart.forEach((element) => {
+        if (element.id == productId && element.color == color){
+            element.quantity = parseInt(newValue);
+        }
+    });
+    let newCartArray = JSON.stringify(cart);
+    localStorage.setItem('cart', newCartArray);
+    location.reload();
+}
+
+/**
  *listen form submit
  * @type {Element}
  */
@@ -215,11 +232,39 @@ const formSubmit = document.querySelector('.cart__order__form');
 formSubmit.addEventListener("submit", function (event) {
     event.preventDefault();
 
+
+
     if (isValidForm() === true) {
-        window.location.href = 'confirmation.html';
+
+        const formContact = {
+             firstName: document.getElementById('firstName'),
+             lastName: document.getElementById('lastName'),
+             city: document.getElementById('city'),
+             address: document.getElementById('address'),
+             email: document.getElementById('email'),
+        }
+
+        cart = localStorage.getItem("cart");
+        const orderBody = {
+            contact: formContact,
+            products: JSON.parse(cart).map((item) => item.id ),
+        }
+
+        const orderUrl = `http://localhost:3000/api/products/order`;
+        let option = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderBody),
+        }
+
+        return fetch(orderUrl, option).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            window.location.href = 'confirmation.html?order-id=' + data.orderId;
+        });
+
     }
 });
-
 
 
 

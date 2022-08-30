@@ -8,7 +8,12 @@ window.addEventListener("DOMContentLoaded", (event) => {
  */
 function showId() {
 
+    const stringUrl = window.location.href;
+    const url = new URL(stringUrl);
+    const orderId = url.searchParams.get("order-id");
+
+
     let spanOrder = document.querySelector('#orderId')
-    spanOrder.innerHTML = Math.floor(Math.random() * 1e8);
+    spanOrder.innerHTML = orderId;
 
 };
